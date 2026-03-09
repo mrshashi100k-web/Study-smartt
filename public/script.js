@@ -1,157 +1,93 @@
-let questions=[]
-let index=0
-let score=0
-let answers=[]
+async function signup(){
 
-setTimeout(()=>{
-document.getElementById("welcome").style.display="none"
-document.getElementById("app").style.display="block"
-},2000)
+let u=document.getElementById("username").value
+let p=document.getElementById("password").value
 
-document.getElementById("date").innerText=new Date().toLocaleString()
+let res=await fetch("/signup",{
 
-const quotes=[
-"Stay consistent",
-"Push yourself daily",
-"Success needs discipline",
-"Dream big"
-]
+method:"POST",
 
-document.getElementById("motivation").innerText=
-quotes[Math.floor(Math.random()*quotes.length)]
+headers:{"Content-Type":"application/json"},
 
-function show(name){
+body:JSON.stringify({username:u,password:p})
 
-document.querySelectorAll(".screen").forEach(s=>{
-s.style.display="none"
 })
 
-document.getElementById(name).style.display="block"
+let data=await res.json()
 
-}
+if(data.status==="exists"){
 
-async function startQuiz(subject){
-
-const res=await fetch("/questions?subject="+subject)
-
-questions=await res.json()
-
-index=0
-score=0
-answers=[]
-
-showQuestion()
-
-}
-
-function showQuestion(){
-
-let q=questions[index]
-
-let html=`<h3>${q.question}</h3>`
-
-q.options.forEach(o=>{
-html+=`<button onclick="answer('${o}')">${o}</button>`
-})
-
-html+=`<br>
-<button onclick="prev()">Previous</button>
-<button onclick="next()">Next</button>`
-
-document.getElementById("quizBox").innerHTML=html
-
-}
-
-function answer(opt){
-
-answers[index]=opt
-
-if(opt===questions[index].answer){
-score++
-}
-
-}
-
-function next(){
-
-if(index<19){
-index++
-showQuestion()
-}else{
-finish()
-}
-
-}
-
-function prev(){
-
-if(index>0){
-index--
-showQuestion()
-}
-
-}
-
-function finish(){
-
-if(score>=18){
-
-document.getElementById(
-"tick-"+questions[0].subject
-).innerText="✔"
-
-alert("Task Completed")
+alert("Try different username")
 
 }else{
 
-alert("Score "+score+"/20 Try Again")
+alert("Account created")
 
 }
 
-analysis()
+}
+
+async function login(){
+
+let u=document.getElementById("username").value
+let p=document.getElementById("password").value
+
+let res=await fetch("/login",{
+
+method:"POST",
+
+headers:{"Content-Type":"application/json"},
+
+body:JSON.stringify({username:u,password:p})
+
+})
+
+let data=await res.json()
+
+if(data.status==="ok"){
+
+document.getElementById("loginPage").style.display="none"
+
+loadHome()
+
+}else{
+
+alert("Wrong login")
 
 }
 
-function analysis(){
+}
 
-let html=""
+async function loadHome(){
 
-questions.forEach((q,i)=>{
+let res=await fetch("/daily")
 
-html+=`
-<p>${q.question}</p>
-<p>Your: ${answers[i]}</p>
-<p>Correct: ${q.answer}</p>
-<hr>
+let data=await res.json()
+
+document.getElementById("tasks").innerHTML=
+
+`
+<div class="card">Physics (${data.physics})</div>
+<div class="card">Chemistry (${data.chemistry})</div>
+<div class="card">Biology (${data.biology})</div>
 `
 
-})
+}
 
-document.getElementById("analysisBox").innerHTML=html
+function countdown(){
+
+const target=new Date("May 1, 2026")
+
+const now=new Date()
+
+const diff=target-now
+
+const days=Math.floor(diff/(1000*60*60*24))
+
+document.getElementById("countdown").innerText=
+
+"NEET Countdown: "+days+" days"
 
 }
 
-function saveNote(){
-
-let text=document.getElementById("noteText").value
-let file=document.getElementById("imgUpload").files[0]
-
-let div=document.createElement("div")
-
-div.innerHTML="<p>"+text+"</p>"
-
-if(file){
-
-let img=document.createElement("img")
-
-img.src=URL.createObjectURL(file)
-
-img.style.width="100px"
-
-div.appendChild(img)
-
-}
-
-document.getElementById("notesList").appendChild(div)
-
-}
+setInterval(countdown,1000)
