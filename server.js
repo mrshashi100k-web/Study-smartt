@@ -9,42 +9,14 @@ const physics = [
 "Laws of Motion",
 "Work Energy Power",
 "Gravitation",
-"Thermodynamics",
-"Thermal Physics",
-"Circular motion",
-"Electrostatic",
-"Semiconductor",
-"Magnetic Effect",
-"Emi",
-"capacitor",
-"Wave Optics",
-"Ray Optics",
-"Modern Physics",
-"Wave Theory",
-"Shm",
-"Current Electricity",
+"Thermodynamics"
 ];
 
 const chemistry = [
 "Mole Concept",
 "Structure of Atom",
 "Chemical Bonding",
-"Equilibrium",
-"ionic Equilibrium",
-"Goc 1",
-"Goc 2",
-"thermodynamics",
-"Periodic Table",
-"Chemical Bonding",
-"Redox",
-"aldehyde",
-"Chemical Kinetics",
-"D Block",
-"P Block",
-"Cordination Compund",
-"Haloalkene",
-"Alcohol",
-"biomolecules",
+"Equilibrium"
 ];
 
 const biology = [
@@ -52,37 +24,13 @@ const biology = [
 "Biomolecules",
 "Photosynthesis",
 "Human Reproduction"
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
-"Extra",
 ];
 
 function random(arr){
- return arr[Math.floor(Math.random()*arr.length)];
+ return arr[Math.floor(Math.random() * arr.length)];
 }
 
-app.get("/daily",(req,res)=>{
+app.get("/daily", (req,res)=>{
 
  res.json({
   physics: random(physics),
@@ -92,16 +40,16 @@ app.get("/daily",(req,res)=>{
 
 });
 
-app.get("/questions",(req,res)=>{
+app.get("/questions", (req,res)=>{
 
  const questions = [];
 
  for(let i=1;i<=20;i++){
 
   questions.push({
-   question:"Sample Question "+i,
-   options:["A","B","C","D"],
-   answer:"A"
+   question: "Sample Question " + i,
+   options: ["A","B","C","D"],
+   answer: "A"
   });
 
  }
@@ -112,13 +60,13 @@ app.get("/questions",(req,res)=>{
 
 app.post("/check",(req,res)=>{
 
- const {score} = req.body;
+ const score = req.body.score;
 
  if(score >= 18){
 
   res.json({status:"completed"});
 
- }else{
+ } else {
 
   res.json({status:"retry"});
 
@@ -126,4 +74,8 @@ app.post("/check",(req,res)=>{
 
 });
 
-app.listen(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT,()=>{
+ console.log("Server running on port " + PORT);
+});
