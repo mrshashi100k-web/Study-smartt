@@ -1,3 +1,31 @@
+const motivationQuotes = [
+"Stay consistent and success will follow",
+"Dream big and work daily",
+"Small steps lead to big achievements",
+"Push yourself every day"
+];
+
+setTimeout(()=>{
+ document.getElementById("welcome").style.display="none";
+ document.getElementById("app").style.display="block";
+ showScreen("home");
+},2000);
+
+document.getElementById("date").innerText = new Date().toLocaleString();
+
+document.getElementById("motivation").innerText =
+ motivationQuotes[Math.floor(Math.random()*motivationQuotes.length)];
+
+function showScreen(name){
+
+ document.querySelectorAll(".screen").forEach(s=>{
+  s.style.display="none";
+ });
+
+ document.getElementById(name).style.display="block";
+
+}
+
 async function loadTasks(){
 
  const res = await fetch("/daily");
@@ -5,7 +33,6 @@ async function loadTasks(){
  const data = await res.json();
 
  document.getElementById("tasks").innerHTML =
-
  `
  <p>Physics: ${data.physics}</p>
  <p>Chemistry: ${data.chemistry}</p>
@@ -20,17 +47,15 @@ async function startQuiz(){
 
  const qs = await res.json();
 
- let html = "";
+ let html="";
 
  qs.forEach((q,i)=>{
 
- html += `
- <p>${i+1}. ${q.question}</p>
- <button onclick="answer()">A</button>
- <button onclick="answer()">B</button>
- <button onclick="answer()">C</button>
- <button onclick="answer()">D</button>
- `;
+ html += `<p>${i+1}. ${q.question}</p>`;
+
+ q.options.forEach(o=>{
+ html+=`<button>${o}</button>`;
+ });
 
  });
 
@@ -38,50 +63,24 @@ async function startQuiz(){
 
 }
 
-let score = 0;
+function saveNote(){
 
-function answer(){
+ const text=document.getElementById("noteText").value;
+ const file=document.getElementById("imgUpload").files[0];
 
- score++;
+ const div=document.createElement("div");
 
-}
+ div.innerHTML="<p>"+text+"</p>";
 
-async function finishQuiz(){
+ if(file){
 
- const res = await fetch("/check",{
+ const img=document.createElement("img");
+ img.src=URL.createObjectURL(file);
 
- method:"POST",
-
- headers:{"Content-Type":"application/json"},
-
- body:JSON.stringify({score})
-
- });
-
- const data = await res.json();
-
- if(data.status=="completed"){
-
- alert("Task Completed");
-
- }else{
-
- alert("Try Again");
+ div.appendChild(img);
 
  }
 
-}
-
-function saveNote(){
-
- const text = document.getElementById("noteText").value;
-
- const img = document.getElementById("imageLink").value;
-
- const li = document.createElement("li");
-
- li.innerHTML = text + "<br><img src='"+img+"' width='100'>";
-
- document.getElementById("notes").appendChild(li);
+ document.getElementById("notesList").appendChild(div);
 
 }
