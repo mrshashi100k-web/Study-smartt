@@ -1,78 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>StudyFlow</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<!-- Background Music -->
-<audio id="bgMusic" autoplay loop>
-  <source src="bg.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Welcome Screen -->
 <div id="welcome">
-  <h1>StudyFlow</h1>
-  <p>Small daily progress leads to big success</p>
+
+<h1>StudyFlow</h1>
+
+<p>Powered by DK</p>
+
+<div class="loader"></div>
+
 </div>
 
-<!-- Main App -->
 <div id="app">
 
 <header>
-  <div class="calendar">📅 <span id="date"></span></div>
-  <h2 id="motivation"></h2>
+
+<div id="date"></div>
+
+<h3 id="motivation"></h3>
+
 </header>
 
 <section id="home" class="screen">
 
-<h3>Today's Tasks</h3>
-<div id="tasks"></div>
+<div class="card" onclick="startQuiz('physics')">
+Physics <span id="tick-physics">⬜</span>
+</div>
 
-<button onclick="loadTasks()">Generate Tasks</button>
+<div class="card" onclick="startQuiz('chemistry')">
+Chemistry <span id="tick-chemistry">⬜</span>
+</div>
 
-<button onclick="startQuiz()">Start Practice</button>
+<div class="card" onclick="startQuiz('biology')">
+Biology <span id="tick-biology">⬜</span>
+</div>
 
-<div id="quiz"></div>
+<div id="quizBox"></div>
 
 </section>
 
 <section id="analysis" class="screen">
-<h3>Analysis</h3>
-<p>Your study analytics will appear here.</p>
+
+<h2>Quiz Analysis</h2>
+
+<div id="analysisBox"></div>
+
 </section>
 
 <section id="notes" class="screen">
-
-<h3>Notes</h3>
 
 <input id="noteText" placeholder="Write note">
 
 <input type="file" id="imgUpload">
 
-<button onclick="saveNote()">Save Note</button>
+<button onclick="saveNote()">Save</button>
 
 <div id="notesList"></div>
 
 </section>
 
 <section id="help" class="screen">
-<h3>Help</h3>
-<p>Complete 20 questions daily. Score 18+ to finish task.</p>
+
+<h2>Help</h2>
+
+<a href="https://instagram.com/mr.divakar00">
+
+@mr.divakar00
+
+</a>
+
 </section>
 
 </div>
 
-<!-- Bottom Navigation -->
 <nav>
 
-<button onclick="showScreen('home')">Home</button>
-<button onclick="showScreen('analysis')">Analysis</button>
-<button onclick="showScreen('notes')">Notes</button>
-<button onclick="showScreen('help')">Help</button>
+<button onclick="show('home')">Home</button>
+
+<button onclick="show('analysis')">Analysis</button>
+
+<button onclick="show('notes')">Notes</button>
+
+<button onclick="show('help')">Help</button>
 
 </nav>
 
