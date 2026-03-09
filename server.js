@@ -1,81 +1,28 @@
-const express = require("express");
+const express = require("express")
 
-const app = express();
+const app = express()
 
-app.use(express.static("public"));
-app.use(express.json());
+app.use(express.static("public"))
+app.use(express.json())
 
-const physics = [
-"Laws of Motion",
-"Work Energy Power",
-"Gravitation",
-"Thermodynamics"
-];
+const questions = require("./neet_questions.json")
 
-const chemistry = [
-"Mole Concept",
-"Structure of Atom",
-"Chemical Bonding",
-"Equilibrium"
-];
+app.get("/",(req,res)=>{
+res.send("StudyFlow running")
+})
 
-const biology = [
-"Cell: The Unit of Life",
-"Biomolecules",
-"Photosynthesis",
-"Human Reproduction"
-];
+app.get("/questions",(req,res)=>{
 
-function random(arr){
- return arr[Math.floor(Math.random() * arr.length)];
-}
+const subject=req.query.subject
 
-app.get("/daily", (req,res)=>{
+let data=questions[subject] || []
 
- res.json({
-  physics: random(physics),
-  chemistry: random(chemistry),
-  biology: random(biology)
- });
+res.json(data.slice(0,20))
 
-});
+})
 
-app.get("/questions", (req,res)=>{
-
- const questions = [];
-
- for(let i=1;i<=20;i++){
-
-  questions.push({
-   question: "Sample Question " + i,
-   options: ["A","B","C","D"],
-   answer: "A"
-  });
-
- }
-
- res.json(questions);
-
-});
-
-app.post("/check",(req,res)=>{
-
- const score = req.body.score;
-
- if(score >= 18){
-
-  res.json({status:"completed"});
-
- } else {
-
-  res.json({status:"retry"});
-
- }
-
-});
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000
 
 app.listen(PORT,()=>{
- console.log("Server running on port " + PORT);
-});
+console.log("Server running")
+})
