@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>StudyFlow</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>📚 StudyFlow</h1>
+
+<div class="card">
+
+<h2>Today's Tasks</h2>
+
+<div id="tasks"></div>
+
+<button onclick="loadTasks()">Generate Tasks</button>
+
+</div>
+
+<div class="card">
+
+<h2>Practice Quiz</h2>
+
+<button onclick="startQuiz()">Start Quiz</button>
+
+<div id="quiz"></div>
+
+</div>
+
+<div class="card">
+
+<h2>Notes</h2>
+
+<input id="noteText" placeholder="Write note">
+<input id="imageLink" placeholder="Image URL">
+
+<button onclick="saveNote()">Add Note</button>
+
+<ul id="notes"></ul>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
