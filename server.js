@@ -6,7 +6,7 @@ const app = express()
 app.use(express.static("public"))
 app.use(express.json())
 
-const usersFile="users.json"
+const usersFile = "users.json"
 
 function loadUsers(){
 return JSON.parse(fs.readFileSync(usersFile))
@@ -18,9 +18,9 @@ fs.writeFileSync(usersFile,JSON.stringify(data))
 
 app.post("/signup",(req,res)=>{
 
-const {username,password}=req.body
+const {username,password} = req.body
 
-let users=loadUsers()
+let users = loadUsers()
 
 if(users.find(u=>u.username===username)){
 
@@ -40,9 +40,9 @@ app.post("/login",(req,res)=>{
 
 const {username,password}=req.body
 
-let users=loadUsers()
+let users = loadUsers()
 
-const user=users.find(
+const user = users.find(
 u=>u.username===username && u.password===password
 )
 
@@ -54,49 +54,47 @@ res.json({status:"invalid"})
 
 })
 
-const physics=[
+const physics = [
 "Units & Dimensions",
 "Circular Motion",
 "Gravitation",
 "Thermodynamics"
 ]
 
-const chemistry=[
+const chemistry = [
 "Chemical Bonding",
 "Equilibrium",
 "Periodic Table",
 "Electrochemistry"
 ]
 
-const biology=[
+const biology = [
 "Respiration",
 "Circulation",
 "Plant Diversity",
 "Cell Biology"
 ]
 
-let daily={}
+let daily = {}
 
 function today(){
 return new Date().toISOString().slice(0,10)
 }
 
-function pick(arr){
+function random(arr){
 return arr[Math.floor(Math.random()*arr.length)]
 }
 
 app.get("/daily",(req,res)=>{
 
-let d=today()
+const d = today()
 
 if(!daily[d]){
 
-daily[d]={
-
-physics:pick(physics),
-chemistry:pick(chemistry),
-biology:pick(biology)
-
+daily[d] = {
+physics: random(physics),
+chemistry: random(chemistry),
+biology: random(biology)
 }
 
 }
@@ -111,8 +109,8 @@ let qs=[]
 
 for(let i=1;i<=20;i++){
 
-let a=Math.floor(Math.random()*10)
-let b=Math.floor(Math.random()*10)
+let a = Math.floor(Math.random()*20)
+let b = Math.floor(Math.random()*20)
 
 qs.push({
 
@@ -130,6 +128,8 @@ res.json(qs)
 
 })
 
-const PORT=process.env.PORT||3000
+const PORT = process.env.PORT || 3000
 
-app.listen(PORT)
+app.listen(PORT,()=>{
+console.log("Server running")
+})
