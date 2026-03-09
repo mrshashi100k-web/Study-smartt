@@ -1,53 +1,82 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>StudyFlow</title>
-
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-<h1>📚 StudyFlow</h1>
+<!-- Background Music -->
+<audio id="bgMusic" autoplay loop>
+  <source src="bg.mp3" type="audio/mpeg">
+</audio>
 
-<div class="card">
+<!-- Welcome Screen -->
+<div id="welcome">
+  <h1>StudyFlow</h1>
+  <p>Small daily progress leads to big success</p>
+</div>
 
-<h2>Today's Tasks</h2>
+<!-- Main App -->
+<div id="app">
 
+<header>
+  <div class="calendar">📅 <span id="date"></span></div>
+  <h2 id="motivation"></h2>
+</header>
+
+<section id="home" class="screen">
+
+<h3>Today's Tasks</h3>
 <div id="tasks"></div>
 
 <button onclick="loadTasks()">Generate Tasks</button>
 
-</div>
-
-<div class="card">
-
-<h2>Practice Quiz</h2>
-
-<button onclick="startQuiz()">Start Quiz</button>
+<button onclick="startQuiz()">Start Practice</button>
 
 <div id="quiz"></div>
 
-</div>
+</section>
 
-<div class="card">
+<section id="analysis" class="screen">
+<h3>Analysis</h3>
+<p>Your study analytics will appear here.</p>
+</section>
 
-<h2>Notes</h2>
+<section id="notes" class="screen">
+
+<h3>Notes</h3>
 
 <input id="noteText" placeholder="Write note">
-<input id="imageLink" placeholder="Image URL">
 
-<button onclick="saveNote()">Add Note</button>
+<input type="file" id="imgUpload">
 
-<ul id="notes"></ul>
+<button onclick="saveNote()">Save Note</button>
+
+<div id="notesList"></div>
+
+</section>
+
+<section id="help" class="screen">
+<h3>Help</h3>
+<p>Complete 20 questions daily. Score 18+ to finish task.</p>
+</section>
 
 </div>
+
+<!-- Bottom Navigation -->
+<nav>
+
+<button onclick="showScreen('home')">Home</button>
+<button onclick="showScreen('analysis')">Analysis</button>
+<button onclick="showScreen('notes')">Notes</button>
+<button onclick="showScreen('help')">Help</button>
+
+</nav>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
